@@ -1,0 +1,79 @@
+external_templates:
+  pmm: templates
+  template_variables:
+    text_<<key>>: <<text>>
+    group: status
+    default:
+      horizontal_align: left
+      vertical_align: bottom
+    conditionals:
+      vertical_offset:
+        default: 15
+        conditions:
+          - vertical_align.exists: false
+            value: 35
+          - vertical_align: center
+            value: 0
+          - vertical_align: top
+            value: 15
+          - vertical_align: bottom
+            value: 35
+      horizontal_offset:
+        default: 15
+        conditions:
+          - horizontal_align: center
+            value: 0
+          - horizontal_align: [left, right]
+            value: 35
+    font_size: 60
+    font: config/overlays/fonts/CircularStd-Bold.otf
+    font_color: <<fcolor>>
+    back_color: <<bcolor>>
+    back_width: <<bwidth>>
+    back_height: 105
+    allowed_libraries: show
+    final_name: text(<<text_<<key>>>>)
+
+templates:
+  status:
+    optional:
+      - last
+    conditionals:
+      all:
+        conditions:
+          - key: [ended, returning, canceled]
+            value: true
+      tmdb:
+        conditions:
+          - key: [ended, returning, canceled]
+            value: <<key>>
+      last_days:
+        conditions:
+          - key: airing
+            last.exists: true
+            value: <<last>>
+    ignore_blank_results: true
+    plex_search:
+      any:
+        episode_air_date: <<last_days>>
+    plex_all: <<all>>
+    filters:
+      tmdb_status: <<tmdb>>
+
+overlays:
+
+  airing_shows:
+    variables: {key: airing, weight: 40, text: Airing, last: 14, bwidth: 235, bcolor: "#1A1919DD", fcolor: "#e5a00dDD"}
+    template: [name: standard, name: status]
+
+  returning_shows:
+    variables: {key: returning, weight: 30, text: Returning, bwidth: 335, bcolor: "#1A1919DD", fcolor: "#918D8D"}
+    template: [name: standard, name: status]
+
+  canceled_shows:
+    variables: {key: canceled, weight: 20, text: Canceled, bwidth: 330, bcolor: "#cc0000DD", fcolor: "#FFB3C0"}
+    template: [name: standard, name: status]
+
+  ended_shows:
+    variables: {key: ended, weight: 10, text: Ended, bwidth: 240, bcolor: "#004087DD", fcolor: "#A7C8FA"}
+    template: [name: standard, name: status]
