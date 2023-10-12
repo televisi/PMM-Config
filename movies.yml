@@ -1,0 +1,25 @@
+templates:
+  Best of:
+    trakt_list: https://trakt.tv/users/lish408/lists/rotten-tomatoes-best-of-<<year>>
+    sort_title: +1_Best of <<year>>
+    sync_mode: sync
+    summary: Rotten Tomatoes Best Movies of <<year>>
+    smart_label: audience_rating.desc
+  Golden Globe:
+    trakt_list: https://trakt.tv/users/pjcob/lists/<<year>>-golden-globes
+    sort_title: +1_Golden Globes <<year>>
+    sync_mode: sync
+    summary: Golden Globes <<year>>
+    smart_label: audience_rating.desc
+  
+collections:
+  Best Movies of 2021:
+    template: {name: Best of, year: 2021}
+  Best Movies of 2022:
+    template: {name: Best of, year: 2022}
+  Best Movies of 2023:
+    template: {name: Best of, year: 2023}    
+  Golden Globes 2022:
+    template: {name: Golden Globe, year: 2022}
+  Golden Globes 2023:
+    template: {name: Golden Globe, year: 2023}
